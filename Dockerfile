@@ -28,7 +28,7 @@ RUN conda config --append channels conda-forge
 # RUN conda install -y tsnecuda -c cannylab
 RUN conda install -c nvidia -c rapidsai -c pytorch -c numba -c conda-forge -c defaults cudf=0.5 cuml=0.5
 RUN conda install -y numpy scipy scikit-learn scikit-image nose anaconda tensorboardx umap-learn
-RUN conda install pytorch torchvision cudatoolkit=9.2 -c pytorch
+RUN conda install pytorch torchvision cudatoolkit=10.0 -c pytorch
 RUN yes | pip install wheel
 
 RUN pip uninstall --yes pillow
