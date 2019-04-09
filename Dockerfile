@@ -26,7 +26,7 @@ RUN conda install -y python=3.6
 RUN conda config --append channels conda-forge
 # RUN conda install -y faiss-gpu cuda90 -c pytorch
 # RUN conda install -y tsnecuda -c cannylab
-RUN conda install -c nvidia -c rapidsai -c pytorch -c numba -c conda-forge -c defaults cudf=0.5 cuml=0.5
+RUN conda install -c nvidia/label/cuda10.0 -c rapidsai/label/cuda10.0 -c pytorch -c numba -c conda-forge cudf=0.6 cuml=0.6
 RUN conda install -y numpy scipy scikit-learn scikit-image nose anaconda tensorboardx umap-learn
 RUN conda install pytorch torchvision cudatoolkit=10.0 -c pytorch
 RUN yes | pip install wheel
