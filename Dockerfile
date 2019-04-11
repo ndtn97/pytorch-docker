@@ -31,6 +31,8 @@ RUN conda config --append channels conda-forge
 RUN conda install -c nvidia/label/cuda10.0 -c rapidsai/label/cuda10.0 -c pytorch -c numba -c conda-forge cudf=0.6 cuml=0.6
 RUN conda install -y numpy scipy scikit-learn scikit-image nose anaconda tensorboardx umap-learn
 RUN conda install pytorch torchvision cudatoolkit=10.0 -c pytorch
+RUN conda install faiss-gpu cudatoolkit=10.0 -c pytorch
+
 RUN yes | pip install wheel
 
 RUN pip uninstall --yes pillow
@@ -54,6 +56,11 @@ WORKDIR /
 RUN git clone https://github.com/ebattenberg/ggmm.git
 WORKDIR /ggmm
 RUN yes | pip install .
+
+WORKDIR /
+RUN git clone https://github.com/NVIDIA/apex
+WORKDIR /apex
+RUN yes | pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" .
 
 WORKDIR /
 RUN rm -rf Miniconda3-latest-Linux-x86_64.sh kmcuda cudamat ggmm
