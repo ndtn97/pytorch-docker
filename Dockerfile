@@ -13,8 +13,9 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN apt-get clean
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install --no-install-recommends gcc g++ cmake vim build-essential python3-dev git less openssh-server zlib1g-dev libjpeg-dev wget -y
+RUN apt-get install --no-install-recommends gcc g++ cmake vim build-essential python3-dev git less openssh-server zlib1g-dev libjpeg-dev wget software-properties-common -y
 RUN add-apt-repository ppa:deadsnakes/ppa -y
+RUN apt-get update
 RUN apt-get install python3.5-dev -y --no-install-recommends
 
 ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:$LD_LIBRARY_PATH
