@@ -1,10 +1,10 @@
-FROM nvidia/cuda:10.0-cudnn7-devel
+OM aistairc/aaic:ubuntu16.04-cuda9.0-cudnn7-openmpi2.1.3
 MAINTAINER ndtn97
 
 ARG SM_TAG
 SHELL ["/bin/bash", "-c"]
 
-# RUN echo "building for ${SM_TAG}"
+RUN echo "building for ${SM_TAG}"
 
 CMD echo "running..."
 
@@ -13,10 +13,7 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN apt-get clean
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install --no-install-recommends gcc g++ cmake vim build-essential python3-dev git less openssh-server zlib1g-dev libjpeg-dev wget software-properties-common -y
-RUN add-apt-repository ppa:deadsnakes/ppa -y
-RUN apt-get update
-RUN apt-get install python3.5-dev -y --no-install-recommends
+RUN apt-get install --no-install-recommends gcc g++ cmake vim build-essential python3-dev git less openssh-server zlib1g-dev libjpeg-dev wget -y
 
 ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:$LD_LIBRARY_PATH
 ENV PATH /usr/local/cuda/bin:$PATH
@@ -25,13 +22,12 @@ RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 RUN sh Miniconda3-latest-Linux-x86_64.sh -b -p /opt/miniconda3
 
 ENV PATH /opt/miniconda3/bin:$PATH
-RUN conda install -y python=3.6
+RUN conda install -y python=3.6.8
 RUN conda config --append channels conda-forge
-RUN conda install -y -c defaults -c nvidia -c rapidsai -c pytorch -c numba -c conda-forge cudf=0.7 cuml=0.7 cudatoolkit=10.0
-RUN conda install -y numpy scipy scikit-learn scikit-image nose anaconda tensorboardx umap-learn autopep8 flake8
-RUN conda install pytorch torchvision cudatoolkit=10.0 -c pytorch
-RUN conda install faiss-gpu cudatoolkit=10.0 -c pytorch
-
+RUN conda install -y faiss-gpu cuda90 -c pytorch
+RUN conda install -y tsnecuda -c cannylab
+RUN conda install -y numpy scipy scikit-learn scikit-image nose anaconda tensorboardx umap-learn
+RUN conda install pytorch torchvision cudatoolkit=9.0 -c pytorch
 RUN yes | pip install wheel
 
 RUN pip uninstall --yes pillow
@@ -55,11 +51,6 @@ WORKDIR /
 RUN git clone https://github.com/ebattenberg/ggmm.git
 WORKDIR /ggmm
 RUN yes | pip install .
-
-WORKDIR /
-RUN git clone https://github.com/NVIDIA/apex
-WORKDIR /apex
-RUN yes | pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" .
 
 WORKDIR /
 RUN rm -rf Miniconda3-latest-Linux-x86_64.sh kmcuda cudamat ggmm
