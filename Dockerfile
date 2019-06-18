@@ -1,4 +1,4 @@
-OM aistairc/aaic:ubuntu16.04-cuda9.0-cudnn7-openmpi2.1.3
+FROM aistairc/aaic:ubuntu16.04-cuda9.0-cudnn7-openmpi2.1.3
 MAINTAINER ndtn97
 
 ARG SM_TAG
