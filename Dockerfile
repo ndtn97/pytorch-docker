@@ -54,3 +54,12 @@ RUN yes | pip install .
 
 WORKDIR /
 RUN rm -rf Miniconda3-latest-Linux-x86_64.sh kmcuda cudamat ggmm
+
+WORKDIR /
+RUN git clone https://github.com/NVIDIA/apex
+WORKDIR /apex
+RUN yes | pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
+
+WORKDIR /
+
+RUN pip install adabound
