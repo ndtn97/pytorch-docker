@@ -24,8 +24,7 @@ RUN sh Miniconda3-latest-Linux-x86_64.sh -b -p /opt/miniconda3
 ENV PATH /opt/miniconda3/bin:$PATH
 RUN conda install -y python=3.6.8
 RUN conda config --append channels conda-forge
-RUN conda install -y faiss-gpu cuda90 -c pytorch
-RUN conda install -y tsnecuda -c cannylab
+RUN conda install -y faiss-gpu cudatoolkit=9.0 -c pytorch
 RUN conda install -y numpy scipy scikit-learn scikit-image nose anaconda tensorboardx umap-learn
 RUN conda install pytorch torchvision cudatoolkit=9.0 -c pytorch
 RUN yes | pip install wheel
